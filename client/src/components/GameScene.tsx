@@ -32,7 +32,7 @@
 
 import React, { useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { Box, Plane, Grid, Sky } from '@react-three/drei';
+import { Box, Plane, Grid, Sky, Cylinder } from '@react-three/drei';
 import * as THREE from 'three';
 import { DirectionalLightHelper, CameraHelper } from 'three'; // Import the helper
 // Import generated types
@@ -108,7 +108,7 @@ export const GameScene: React.FC<GameSceneProps> = ({
       >
         <meshStandardMaterial color="#606060" /> { /* Changed to darker gray */ }
       </Plane>
-o
+
       {/* Simplified Grid Helper (mid-gray lines) */}
       <Grid 
         position={[0, 0, 0]} 
@@ -117,6 +117,18 @@ o
         cellThickness={1}
         cellColor={new THREE.Color('#888888')} // Mid-gray grid lines
       />
+
+      {/* Simple Tower */}
+      <group position={[15, 0, -15]}> {/* Position the tower group */}
+        {/* Base Cylinder */}
+        <Cylinder args={[2, 2, 10, 16]} position={[0, 5, 0]} castShadow receiveShadow>
+          <meshStandardMaterial color="dimgray" />
+        </Cylinder>
+        {/* Top Cylinder (crenellations) */}
+        <Cylinder args={[2.5, 2.5, 1.5, 16]} position={[0, 10.75, 0]} castShadow receiveShadow>
+          <meshStandardMaterial color="darkgray" />
+        </Cylinder>
+      </group>
 
       {/* Render Players */}
       {Array.from(players.values()).map((player) => {
